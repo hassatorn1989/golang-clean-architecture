@@ -72,6 +72,13 @@ func (u *SubjectUseCase) Update(ctx context.Context, id uuid.UUID, req *dto.Subj
 		return err
 	}
 
+	// delete existing subject items
+	for _, item := range subject.Items {
+		if err := u.subjectRepo.Delete(ctx, item.ID); err != nil {
+			return err
+		}
+	}
+
 	subject.DepartmentID = req.DepartmentID
 	subject.Title = req.Title
 	subject.Description = req.Description

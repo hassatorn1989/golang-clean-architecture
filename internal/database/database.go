@@ -20,6 +20,9 @@ func NewMySQL(cfg *config.Config) *gorm.DB {
 		&models.RefreshTokenModel{},
 		&models.DepartmentModel{},
 		&models.CategoryModel{},
+		&models.SubjectModel{},
+		&models.SubjectItemModel{},
+		&models.SubjectTypeModel{},
 	); err != nil {
 		log.Fatal("failed to migrate database: ", err)
 	}

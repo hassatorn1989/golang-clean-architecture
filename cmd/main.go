@@ -43,11 +43,21 @@ func main() {
 	categoryUsecase := usecase.NewCategoryUseCase(db, categoryRepo)
 	categoryHandler := handlers.NewCategoryHandler(categoryUsecase)
 
+	subjectRepo := persistence.NewSubjectGormRepository(db)
+	subjectUsecase := usecase.NewSubjectUseCase(db, subjectRepo)
+	subjectHandler := handlers.NewSubjectHandler(subjectUsecase)
+
+	subjectTypeRepo := persistence.NewSubjectTypeGormRepository(db)
+	subjectTypeUsecase := usecase.NewSubjectTypeUseCase(db, subjectTypeRepo)
+	subjectTypeHandler := handlers.NewSubjectTypeHandler(subjectTypeUsecase)
+
 	app := fiber.New()
 	routes.Setup(app,
 		authHandler,
 		departmentHandler,
 		categoryHandler,
+		subjectHandler,
+		subjectTypeHandler,
 		tokenSvc,
 	)
 

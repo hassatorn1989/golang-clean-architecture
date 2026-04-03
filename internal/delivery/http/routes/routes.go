@@ -11,6 +11,8 @@ func Setup(app *fiber.App,
 	authHandler *handlers.AuthHandler,
 	departmentHandler *handlers.DepartmentHandler,
 	categoryHandler *handlers.CategoryHandler,
+	subjectHandler *handlers.SubjectHandler,
+	subjectTypeHandler *handlers.SubjectTypeHandler,
 	tokenSvc services.TokenService) {
 	api := app.Group("/api")
 
@@ -43,4 +45,20 @@ func Setup(app *fiber.App,
 	category.Post("/", categoryHandler.Create)
 	category.Put("/:id", categoryHandler.Update)
 	category.Delete("/:id", categoryHandler.Delete)
+
+	subject := api.Group("/subjects")
+	subject.Get("/", subjectHandler.GetAll)
+	subject.Get("/pagination", subjectHandler.GetWithPagination)
+	subject.Get("/:id", subjectHandler.GetByID)
+	subject.Post("/", subjectHandler.Create)
+	subject.Put("/:id", subjectHandler.Update)
+	subject.Delete("/:id", subjectHandler.Delete)
+
+	subjectType := api.Group("/subject-types")
+	subjectType.Get("/", subjectTypeHandler.GetAll)
+	subjectType.Get("/pagination", subjectTypeHandler.GetWithPagination)
+	subjectType.Get("/:id", subjectTypeHandler.GetByID)
+	subjectType.Post("/", subjectTypeHandler.Create)
+	subjectType.Put("/:id", subjectTypeHandler.Update)
+	subjectType.Delete("/:id", subjectTypeHandler.Delete)
 }
